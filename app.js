@@ -1,23 +1,18 @@
 // import express.js
 const express = require("express");
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+const bodyParser = require("body-parser");
 
 // przypoisanie funckji do zmiennej
 const app = express();
 
-app.use("/", (req, res, next) => {
-  console.log("This always run!");
-  next();
-});
+// Obsługa Body parser'a
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/add-product", (req, res, next) => {
-  console.log("In another middleware");
-  res.send("<h1>The 'Add product' Page!</h1>");
-});
-
-app.use("/", (req, res, next) => {
-  console.log("In another middleware");
-  res.send("<h1>Hello from Express!!!</h1>");
-});
+// Uzycie obiektu router'a
+app.use(adminRoutes);
+app.use(shopRoutes);
 
 // tworzenie i nasłuchiwanie serwera
 app.listen(3000);
